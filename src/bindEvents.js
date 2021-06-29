@@ -22,19 +22,21 @@ const buttonIsDown = function(e) {
 };
 
 const bindEvents = function(lc, canvas, panWithKeyboard) {
+    let down = false;
+
     if (panWithKeyboard == null) {
         panWithKeyboard = false;
     }
     const unsubs = [];
 
     const mouseMoveListener = e => {
-        e.preventDefault();
+        if (down) e.preventDefault();
         const p = position(canvas, e);
         lc.pointerMove(p.left, p.top);
     };
 
     var mouseUpListener = e => {
-        e.preventDefault();
+        if (down) e.preventDefault();
         canvas.onselectstart = () => true; // enable selection while dragging
         const p = position(canvas, e);
         lc.pointerUp(p.left, p.top);
@@ -42,6 +44,7 @@ const bindEvents = function(lc, canvas, panWithKeyboard) {
         document.removeEventListener("mouseup", mouseUpListener);
 
         canvas.addEventListener("mousemove", mouseMoveListener);
+        down = false;
     };
 
     canvas.addEventListener("mousedown", e => {
@@ -49,7 +52,7 @@ const bindEvents = function(lc, canvas, panWithKeyboard) {
             return;
         }
 
-        const down = true;
+        down = true;
         e.preventDefault();
         canvas.onselectstart = () => false; // disable selection while dragging
         const p = position(canvas, e);
