@@ -454,6 +454,7 @@ const _createLinePathFromData = function(shapeName, data) {
                     y,
                     size: data.pointSize,
                     color: data.pointColor,
+                    fillColor: data.fillColor,
                     smooth: data.smooth,
                 },
             }),
@@ -470,6 +471,7 @@ const _createLinePathFromData = function(shapeName, data) {
                     y,
                     size: data.pointSize,
                     color: data.pointColor,
+                    fillColor: data.fillColor,
                     smooth: data.smooth,
                 },
             }),
@@ -484,6 +486,7 @@ const _createLinePathFromData = function(shapeName, data) {
         smoothedPoints,
         order: data.order,
         tailSize: data.tailSize,
+        fillColor: data.fillColor,
         smooth: data.smooth,
     });
 };
@@ -497,6 +500,7 @@ const linePathFuncs = {
         this.order = args.order || 3;
         this.tailSize = args.tailSize || 3;
         this.smooth = "smooth" in args ? args.smooth : true;
+        this.fillColor = args.fillColor || "transparent";
 
         // The number of smoothed points generated for each point added
         this.segmentSize = Math.pow(2, this.order);
@@ -533,6 +537,7 @@ const linePathFuncs = {
                 tailSize: this.tailSize,
                 smooth: this.smooth,
                 customData: this.customData,
+                fillColor: this.fillColor,
                 pointCoordinatePairs: this.points.map(point => [
                     point.x,
                     point.y,
@@ -550,6 +555,7 @@ const linePathFuncs = {
                 tailSize: this.tailSize,
                 smooth: this.smooth,
                 customData: this.customData,
+                fillColor: this.fillColor,
                 points: this.points.map(p => shapeToJSON(p)),
             };
         }

@@ -30,21 +30,25 @@ const bindEvents = function(lc, canvas, panWithKeyboard) {
     const unsubs = [];
 
     const mouseMoveListener = e => {
-        if (down) e.preventDefault();
-        const p = position(canvas, e);
-        lc.pointerMove(p.left, p.top);
+        if (down) {
+            e.preventDefault();
+            const p = position(canvas, e);
+            lc.pointerMove(p.left, p.top);
+        }
     };
 
     var mouseUpListener = e => {
-        if (down) e.preventDefault();
-        canvas.onselectstart = () => true; // enable selection while dragging
-        const p = position(canvas, e);
-        lc.pointerUp(p.left, p.top);
-        document.removeEventListener("mousemove", mouseMoveListener);
-        document.removeEventListener("mouseup", mouseUpListener);
+        if (down) {
+            e.preventDefault();
+            canvas.onselectstart = () => true; // enable selection while dragging
+            const p = position(canvas, e);
+            lc.pointerUp(p.left, p.top);
+            document.removeEventListener("mousemove", mouseMoveListener);
+            document.removeEventListener("mouseup", mouseUpListener);
 
-        canvas.addEventListener("mousemove", mouseMoveListener);
-        down = false;
+            canvas.addEventListener("mousemove", mouseMoveListener);
+            down = false;
+        }
     };
 
     canvas.addEventListener("mousedown", e => {
