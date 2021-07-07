@@ -459,7 +459,7 @@ class LiterallyCanvas {
                 }
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                 if (this.canvas.width > 0 && this.canvas.height > 0) {
-                    this.ctx.fillStyle = "#ccc";
+                    this.ctx.fillStyle = "transparent";
                     this.ctx.fillRect(
                         0,
                         0,

@@ -318,6 +318,7 @@ defineShape("Ellipse", {
         this.strokeWidth = args.strokeWidth || 1;
         this.strokeColor = args.strokeColor || "black";
         this.fillColor = args.fillColor || "transparent";
+        this.customData = args.customData || {};
     },
 
     getBoundingRect() {
@@ -337,6 +338,7 @@ defineShape("Ellipse", {
             strokeWidth: this.strokeWidth,
             strokeColor: this.strokeColor,
             fillColor: this.fillColor,
+            customData: this.customData,
         };
     },
     fromJSON(data) {
@@ -372,6 +374,7 @@ defineShape("Line", {
         this.capStyle = args.capStyle || "round";
         this.endCapShapes = args.endCapShapes || [null, null];
         this.dash = args.dash || null;
+        this.customData = args.customData || {};
     },
 
     getBoundingRect() {
@@ -393,6 +396,7 @@ defineShape("Line", {
             capStyle: this.capStyle,
             dash: this.dash,
             endCapShapes: this.endCapShapes,
+            customData: this.customData,
         };
     },
     fromJSON(data) {
@@ -450,6 +454,7 @@ const _createLinePathFromData = function(shapeName, data) {
                     y,
                     size: data.pointSize,
                     color: data.pointColor,
+                    fillColor: data.fillColor,
                     smooth: data.smooth,
                 },
             }),
@@ -466,6 +471,7 @@ const _createLinePathFromData = function(shapeName, data) {
                     y,
                     size: data.pointSize,
                     color: data.pointColor,
+                    fillColor: data.fillColor,
                     smooth: data.smooth,
                 },
             }),
@@ -480,6 +486,7 @@ const _createLinePathFromData = function(shapeName, data) {
         smoothedPoints,
         order: data.order,
         tailSize: data.tailSize,
+        fillColor: data.fillColor,
         smooth: data.smooth,
     });
 };
@@ -493,6 +500,7 @@ const linePathFuncs = {
         this.order = args.order || 3;
         this.tailSize = args.tailSize || 3;
         this.smooth = "smooth" in args ? args.smooth : true;
+        this.fillColor = args.fillColor || "transparent";
 
         // The number of smoothed points generated for each point added
         this.segmentSize = Math.pow(2, this.order);
@@ -507,6 +515,8 @@ const linePathFuncs = {
             this.points = [];
             points.map(point => this.addPoint(point));
         }
+
+        this.customData = args.customData || {};
     },
 
     getBoundingRect() {
@@ -526,6 +536,8 @@ const linePathFuncs = {
                 order: this.order,
                 tailSize: this.tailSize,
                 smooth: this.smooth,
+                customData: this.customData,
+                fillColor: this.fillColor,
                 pointCoordinatePairs: this.points.map(point => [
                     point.x,
                     point.y,
@@ -542,6 +554,8 @@ const linePathFuncs = {
                 order: this.order,
                 tailSize: this.tailSize,
                 smooth: this.smooth,
+                customData: this.customData,
+                fillColor: this.fillColor,
                 points: this.points.map(p => shapeToJSON(p)),
             };
         }

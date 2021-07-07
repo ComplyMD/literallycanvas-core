@@ -244,10 +244,13 @@ const _drawRawLinePath = function(ctx, points, close, lineCap) {
 };
 
 const drawLinePath = function(ctx, shape) {
+    ctx.fillStyle = shape.fillColor;
     _drawRawLinePath(ctx, shape.smoothedPoints);
+    ctx.fill();
     ctx.stroke();
 };
 const drawLinePathLatest = function(ctx, bufferCtx, shape) {
+    bufferCtx.fillStyle = shape.fillColor;
     if (shape.tail) {
         const segmentStart =
             shape.smoothedPoints.length - shape.segmentSize * shape.tailSize;
